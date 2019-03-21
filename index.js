@@ -56,6 +56,3 @@ function searchRepositories() {
       displayError()
     })
 }
-
-$(document).ready(function (){
-});

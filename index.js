@@ -17,8 +17,8 @@ function showCommits { el =>
     $('#details').html(renderCommits(data))
   }).fail(error => {
     displayError()
-  })
-}
+  }
+
 
 var renderSearchResult = (result) => {
   return `

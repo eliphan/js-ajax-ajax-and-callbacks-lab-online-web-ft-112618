@@ -1,10 +1,32 @@
 $(document).ready(function (){
 });
 
-$.get('this_doesnt_exist.html', function(data) {
-    // This will not be called because the .html file request doesn't exist
-    doSomethingGood();
-}).fail(function(error) {
-    // This is called when an error occurs
-    console.log('Something went wrong: ' + error.statusText);
-});
+var displayError = () => $('#errors').html("I'm sorry, there's been an error. Please try again.")
+
+var renderCommit = (commit) => {
+  return `<li><h3>${commit.sha}</h3><p>${commit.commit.message}</p></li>`
+}
+
+var renderCommits = (data) => {
+  let result = data.map((commit)=>renderCommit(commit)).join('')
+  return `<ul>${result}</ul>`
+}
+
+var showCommits = (el) => {
+  $.get(`https://api.github.com/repos/${el.dataset.owner}/${el.dataset.repository}/commits`, data => {
+    $('#details').html(renderCommits(data))
+  }).fail(error => {
+    displayError()
+  })
+}
+
+var renderSearchResult = (result) => {
+  return `
+      <div>
+        <h2><a href="${result.html_url}">${result.name}</a></h2>
+        <p><a href="#" data-repository="${result.name}" data-owner="${result.owner.login}" onclick="showCommits(this)">Show Commits</a></p>
+        <p>${result.description}</p>
+      </div>
+      <hr>
+    `
+}

@@ -33,7 +33,7 @@ function renderSearchResult(result) {
     `
 }
 
-var renderSearchResult = (result) => {
+function renderSearchResult(result) {
   return `
       <div>
         <h2><a href="${result.html_url}">${result.name}</a></h2>
